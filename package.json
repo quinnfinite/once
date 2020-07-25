@@ -1,0 +1,28 @@
+{
+  "name": "once",
+  "version": "1.0.0",
+  "description": "A Social site that is actually social",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quinnfinite/once.git"
+  },
+  "author": "Quinn Royston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quinnfinite/once/issues"
+  },
+  "homepage": "https://github.com/quinnfinite/once#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "webpack": "^4.44.0"
+  }
+}
