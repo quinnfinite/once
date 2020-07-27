@@ -41,3 +41,16 @@ router.get('/followers', async (req, res) => {
     res.send(err)
   })
 });
+
+router.get('/following', async (req, res) => {
+  const {username} = req.body;
+  const ses = await session();
+  ses.run('MATCH (u:User)-[:Follows]->(p) WHERE u.username=$username RETURN p', {username: username})
+  .then(({records}) => {
+    res.send(records)
+  })
+  .catch((err) => {
+    console.log('Error - ', err)
+    res.send(err)
+  })
+});
