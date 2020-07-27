@@ -89,4 +89,22 @@ router.delete('/unfollow', async (req, res) => {
     res.send(err)
   })
   .then(() => ses.close())
+});
+
+//shows mutual
+router.get('/mutual', async (req, res) => {
+  const {username, follow} = req.body;
+  const ses = await session();
+  console.log(username, follow)
+  ses.run('MATCH (u:User)-[:Follows]->(a)<-[:Follows]-(f:User) WHERE u.username=$username AND f.username=$follow RETURN a', {username: username, follow: follow})
+  .then(({records}) => {
+    res.send(records)
+  })
+  .catch((err) => {
+    console.log('Error - ', err);
+    res.send(err)
+  })
+  .then(() => ses.close())
 })
+
+//suggested follows
