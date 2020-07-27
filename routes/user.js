@@ -124,5 +124,17 @@ router.get('/mutual-followers', async (req, res) => {
 
 //suggested follows
 router.get('/suggested', async (req, res) => {
+  const { username } = req.body;
+  const ses = await session();
+  ses.run('MATCH (u:User)-[:Follows]->()-[:Follows]->(f) WHERE u.username=$username AND NOT exists((u:User)-[:Follows]->(f)) RETURN f', {username: username})
+  .then(({records}) => {
+    res.send(records)
+  })
+  .catch((err) => {
+    console.log('Error - ', err);
+    res.send(err)
+  })
+  .then(() => ses.close())
+});
 
-})
+
