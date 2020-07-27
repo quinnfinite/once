@@ -27,6 +27,7 @@ router.get('/all', async (req, res)=> {
     res.send(records);
   })
   .catch(err => res.send(err))
+  .then(() => ses.close())
 });
 
 router.get('/followers', async (req, res) => {
@@ -40,6 +41,7 @@ router.get('/followers', async (req, res) => {
     console.log(err)
     res.send(err)
   })
+  .then(() => ses.close())
 });
 
 router.get('/following', async (req, res) => {
@@ -53,6 +55,7 @@ router.get('/following', async (req, res) => {
     console.log('Error - ', err)
     res.send(err)
   })
+  .then(() => ses.close())
 });
 
 router.post('/follow', async (req, res) => {
@@ -66,7 +69,24 @@ router.post('/follow', async (req, res) => {
     res.send(`${username} followed ${followed}`)
   })
   .catch((err) => {
-    console.log('Error - ', err)
+    console.log('Error - ', err);
     res.send(err)
   })
+  .then(() => ses.close())
 });
+
+router.delete('/unfollow', async (req, res) => {
+  const { username, follow }  = req.body;
+  const ses = await session('WRITE');
+  ses.run('MATCH (u:User)-[d:Follows]->(f:User) WHERE u.username=$username AND f.username=$follow DELETE d', {
+    username: username, follow: follow
+  })
+  .then(() => {
+    res.send(`${username} has unfollowed ${follow}`)
+  })
+  .catch((err) => {
+    console.log('Error - ', err);
+    res.send(err)
+  })
+  .then(() => ses.close())
+})
