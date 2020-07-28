@@ -15,6 +15,7 @@ class App extends React.Component {
       posts: [],
       suggested: []
     }
+    this.getPosts = this.getPosts.bind(this)
   }
   componentDidMount(){
     this.getPosts();
@@ -44,7 +45,7 @@ class App extends React.Component {
         <Navbar />
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
-              <Create />
+              <Create refresh={this.getPosts}/>
               <Timeline posts={this.state.posts}/>
           </Grid>
           <Grid item xs={12} sm={3}>

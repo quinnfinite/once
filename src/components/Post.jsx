@@ -30,13 +30,8 @@ export default function Post(props) {
   <React.Fragment>
     <Grid container spacing={1}>
       <Grid item xs={12}>
-      <Paper className={classes.paper}>
-        <Grid container justify="flex-start" alignItems="center">
-          <Avatar>
-            <AccountCircleIcon />
-          </Avatar>
-           {props.data._fields[0].properties.author}
-        </Grid>
+      <Paper variant="outlined" className={classes.paper}>
+
         <Grid item xs={12} className={classes.item}>
           {props.data._fields[0].properties.text}
         </Grid>
