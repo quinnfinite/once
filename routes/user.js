@@ -94,9 +94,7 @@ router.delete('/unfollow', async (req, res) => {
 //shows mutual follows
 router.post('/mutual-follows', async (req, res) => {
   const {username, follow} = req.body;
-  console.log('body - ', req.body)
   const ses = await session();
-  console.log(username, follow)
   ses.run('MATCH (u:User)-[:Follows]->(a)<-[:Follows]-(f:User) WHERE u.username=$username AND f.username=$follow RETURN a', {username: username, follow: follow})
   .then(({records}) => {
     res.send(records)
