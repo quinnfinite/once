@@ -92,8 +92,9 @@ router.delete('/unfollow', async (req, res) => {
 });
 
 //shows mutual follows
-router.get('/mutual-follows', async (req, res) => {
+router.post('/mutual-follows', async (req, res) => {
   const {username, follow} = req.body;
+  console.log('body - ', req.body)
   const ses = await session();
   console.log(username, follow)
   ses.run('MATCH (u:User)-[:Follows]->(a)<-[:Follows]-(f:User) WHERE u.username=$username AND f.username=$follow RETURN a', {username: username, follow: follow})
@@ -108,7 +109,7 @@ router.get('/mutual-follows', async (req, res) => {
 });
 
 //shows mutual followers
-router.get('/mutual-followers', async (req, res) => {
+router.post('/mutual-followers', async (req, res) => {
   const {username, follow} = req.body;
   const ses = await session();
   ses.run('MATCH (u:User)<-[:Follows]-(a)-[:Follows]->(f:User) WHERE u.username=$username AND f.username=$follow RETURN a', {username: username, follow: follow})
@@ -126,7 +127,7 @@ router.get('/mutual-followers', async (req, res) => {
 router.get('/suggested/:username', async (req, res) => {
   const { username } = req.params;
   const ses = await session();
-  ses.run('MATCH (u:User)-[:Follows]->()-[:Follows]->(f) WHERE u.username=$username AND NOT exists((u:User)-[:Follows]->(f)) RETURN f', {username: username})
+  ses.run('MATCH (u:User)-[:Follows]->(a)-[:Follows]->(f) WHERE u.username=$username AND NOT exists((u:User)-[:Follows]->(f)) RETURN f,a', {username: username})
   .then(({records}) => {
     res.send(records)
   })
