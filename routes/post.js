@@ -25,7 +25,7 @@ router.get('/all', async (req, res) => {
   .then(() => ses.close())
 })
 
-router.get('/mine', async (req, res) => {
+router.get('/user', async (req, res) => {
   const { username } = req.body;
   const ses = await session();
   ses.run('MATCH (u:User)-[:Wrote]->(p:Post) WHERE u.username=$username RETURN p', {username: username})
