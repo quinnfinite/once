@@ -2,15 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-
-// const useStyles = makeStyles((theme) => ({
-//   paper: {
-//     padding: theme.spacing(2),
-//     margin: '50px',
-//     textAlign: 'center',
-//     color: theme.palette.text.secondary
-//   }
-// }));
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 class SugFollower extends React.Component{
   constructor(props){
