@@ -1,6 +1,12 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ChatIcon from '@material-ui/icons/Chat';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import { makeStyles } from '@material-ui/core/styles';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -16,9 +22,18 @@ export default function Post(props) {
   return(
   <React.Fragment>
     <Paper className={classes.paper}>
-      <div>{props.data._fields[0].properties.author}</div>
+      <Avatar>
+        <AccountCircleIcon />
+      </Avatar>
+      <div>
+        {props.data._fields[0].properties.author}
+      </div>
       <div>{props.data._fields[0].properties.text}</div>
-      <div>Icon Icon Icon</div>
+      <div>
+        <ThumbDownIcon/>
+        <ThumbUpIcon/>
+        <ChatIcon/>
+      </div>
     </Paper>
 
   </React.Fragment>
