@@ -3,33 +3,49 @@ import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary
-  }
-}));
+// const useStyles = makeStyles((theme) => ({
+//   paper: {
+//     padding: theme.spacing(2),
+//     margin: '50px',
+//     textAlign: 'center',
+//     color: theme.palette.text.secondary
+//   }
+// }));
 
 class SugFollower extends React.Component{
   constructor(props){
     super(props);
     // this.classes = useStyles();
     this.state = {
-      mutualCount: 0
+      mutualFollowers: [],
+      mutualFollowing: [],
+      classes: {},
     }
   }
   componentDidMount(){
-    axios.post(`/user/mutual-follows`, {username: 'Quinn', follow: this.props.data._fields[0].properties.username}).then((data) => console.log('Mutual Follows- ', data))
-    axios.post(`/user/mutual-followers`, {username: 'Quinn', follow: this.props.data._fields[0].properties.username}).then((data) => console.log('Mutual Followers - ', data))
+    axios.post(`/user/mutual-follows`, {username: 'Quinn', follow: this.props.data._fields[0].properties.username}).then((data) => {
+      this.setState({
+        mutualFollowing: data.data
+      })
+      //console.log('Mutual Follows- ', data.data)
+    });
+    axios.post(`/user/mutual-followers`, {username: 'Quinn', follow: this.props.data._fields[0].properties.username}).then((data) => {
+      this.setState({
+        mutualFollowers: data.data
+      })
+      //console.log('Mutual Followers - ', data.data)
+    })
   }
   render(){
     return(
-      <Paper>
-        {this.props.data._fields[0].properties.username}
-        {`followed by: ${this.props.data._fields[1].properties.username}`}
-        {console.log(this.props)}
+      <Paper elevation={3} style={{margin: '10px', padding: '2px'}}>
+        <span>{this.props.data._fields[0].properties.username}</span>
+        <br/>
+        <span>{`followed by: ${this.props.data._fields[1].properties.username}`}</span>
+        <br/>
+        <span>{this.state.mutualFollowers.length} followers in common</span>
+        <br/>
+        <span>You follow {this.state.mutualFollowing.length} of the same people</span>
       </Paper>
     )
   }
