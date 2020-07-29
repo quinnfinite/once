@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { makeStyles } from '@material-ui/core/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
@@ -28,10 +30,19 @@ class SugFollower extends React.Component{
       //console.log('Mutual Followers - ', data.data)
     })
   }
+  follow(){
+    var follow = this.props.data._fields[0].properties.username;
+    axios.post('/user/follow', {username: 'Quinn', follow: follow}).then(() => { this.props.refresh()})
+  }
   render(){
     return(
       <Paper elevation={3} style={{margin: '10px', padding: '2px'}}>
-        <span>{this.props.data._fields[0].properties.username}</span>
+        <span>{this.props.data._fields[0].properties.username}
+        <PersonAddIcon onClick={this.follow.bind(this)}>
+
+        </PersonAddIcon>
+        {/* <Button onClick={this.follow.bind(this)} variant="contained" color="primary">Follow</Button> */}
+        </span>
         <br/>
         <span>{`followed by: ${this.props.data._fields[1].properties.username}`}</span>
         <br/>

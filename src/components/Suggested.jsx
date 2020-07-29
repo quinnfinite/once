@@ -5,7 +5,7 @@ const Suggested = (props) => (
   <React.Fragment>
     <h3>Consider Following</h3>
     {props.suggested.map((sug , key) =>{
-      return <SugFollower data={sug} key={key} />
+      return <SugFollower data={sug} key={key} refresh={props.refresh}/>
     })}
   </React.Fragment>
 )

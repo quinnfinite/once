@@ -15,7 +15,8 @@ class App extends React.Component {
       posts: [],
       suggested: []
     }
-    this.getPosts = this.getPosts.bind(this)
+    this.getPosts = this.getPosts.bind(this);
+    this.getSuggested = this.getSuggested.bind(this);
   }
   componentDidMount(){
     this.getPosts();
@@ -49,7 +50,7 @@ class App extends React.Component {
               <Timeline posts={this.state.posts}/>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <Suggested suggested={this.state.suggested}/>
+            <Suggested suggested={this.state.suggested} refresh={this.getSuggested}/>
           </Grid>
         </Grid>
       </React.Fragment>
